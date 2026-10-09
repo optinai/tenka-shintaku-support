@@ -43,7 +43,7 @@
     .pricepeek{margin:-70px 18px 0;position:relative;z-index:5;padding:24px 13px;background:rgba(13,29,35,.97);border:1px solid rgba(201,165,84,.38);box-shadow:0 18px 45px rgba(0,0,0,.35);text-align:center}
     .pricepeek .ttl{font-size:11px;color:var(--gold);letter-spacing:.22em;margin-bottom:14px}.pricegrid{display:grid;grid-template-columns:repeat(3,1fr)}.mini{padding:3px 6px}.mini+.mini{border-left:1px solid rgba(201,165,84,.22)}.mini b{display:block;font-family:"Shippori Mincho B1",serif;font-size:12px;color:var(--gold-hi)}.mini span{display:block;font:600 clamp(21px,6.4vw,29px)/1.25 "Cormorant Garamond",serif}.mini small{font-family:"Shippori Mincho B1",serif;font-size:10px;margin-left:1px}.pricepeek>small{display:block;color:var(--mute);font-size:11px;line-height:1.8;margin-top:13px}
     .countdown-shell{padding:54px 18px 18px;background:linear-gradient(180deg,var(--ink),#122523)}
-    .countdown-card{--remaining:100%;position:relative;max-width:650px;margin:auto;padding:54px 20px 28px;border:2px solid #d8a397;outline:1px solid rgba(201,165,84,.42);outline-offset:-14px;background:linear-gradient(180deg,#fffaf4,#f7f0e7);color:#392f2a;text-align:center;box-shadow:0 20px 55px rgba(0,0,0,.3)}
+    .countdown-card{position:relative;max-width:650px;margin:auto;padding:54px 20px 28px;border:2px solid #d8a397;outline:1px solid rgba(201,165,84,.42);outline-offset:-14px;background:linear-gradient(180deg,#fffaf4,#f7f0e7);color:#392f2a;text-align:center;box-shadow:0 20px 55px rgba(0,0,0,.3)}
     .countdown-badge{position:absolute;top:-24px;left:50%;transform:translateX(-50%);padding:12px 27px;background:#a83f2c;color:#fff;font-family:"Shippori Mincho B1",serif;font-size:17px;font-weight:800;letter-spacing:.12em;white-space:nowrap;box-shadow:0 9px 22px rgba(104,35,22,.2)}
     .countdown-kicker{font-size:12px;color:#87663f;letter-spacing:.16em;margin-bottom:8px}
     .countdown-card h2{font-size:clamp(22px,6vw,31px);line-height:1.65;color:#382f2b;letter-spacing:.05em}
@@ -53,7 +53,7 @@
     .time-part{position:relative;min-width:0}.time-part:not(:last-child):after{content:"：";position:absolute;right:-.34em;top:4px;color:#bd7967;font-family:"Shippori Mincho B1",serif;font-size:24px}
     .time-value{display:block;font:600 clamp(38px,11vw,59px)/1 "Cormorant Garamond",serif;color:#392f2b;font-variant-numeric:tabular-nums}.time-part:last-child .time-value{color:#b34e39}.time-label{display:block;margin-top:7px;color:#7b6f67;font-size:11px;letter-spacing:.12em}
     .countdown-progress-head{display:flex;justify-content:space-between;gap:14px;margin:20px 6px 8px;color:#756a63;font-size:12px}.countdown-progress-head b{color:#ad4b35;font-family:"Shippori Mincho B1",serif}
-    .countdown-track{height:10px;margin:0 6px;border:1px solid #e3cfaa;border-radius:999px;background:#eeeae5;overflow:hidden}.countdown-track span{display:block;width:var(--remaining);height:100%;border-radius:inherit;background:linear-gradient(90deg,#b94c31,#efa08d);transition:width 1s linear}
+    .countdown-track{height:10px;margin:0 6px;border:1px solid #e3cfaa;border-radius:999px;background:#eeeae5;overflow:hidden}.countdown-track span{display:block;width:90%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#b94c31,#efa08d)}
     .countdown-note{margin:15px 10px 0;color:#71665f;font-size:11px;line-height:1.8}.countdown-ended{display:none;margin:23px 0 5px;color:#9b3d2c;font-family:"Shippori Mincho B1",serif;font-size:17px;font-weight:700}.countdown-card.is-ended .countdown-ended{display:block}.countdown-card.is-ended .countdown-progress{display:none}
     .big{font-family:"Shippori Mincho B1",serif;text-align:center;font-size:clamp(26px,7.4vw,40px);line-height:1.72;font-weight:800;margin:43px 0}
     .quote{margin:40px 0;padding:29px 19px;border-top:1px solid rgba(201,165,84,.28);border-bottom:1px solid rgba(201,165,84,.28);text-align:center;font-family:"Shippori Mincho B1",serif;font-size:18px;line-height:2.05;color:var(--gold-hi);background:linear-gradient(180deg,rgba(201,165,84,.06),transparent)}
@@ -112,8 +112,8 @@
         <div class="time-part"><span class="time-value" data-seconds>59</span><span class="time-label">秒</span></div>
       </div>
       <div class="countdown-progress">
-        <div class="countdown-progress-head"><span>ご案内期間の残り</span><b data-remaining-text>あと3日</b></div>
-        <div class="countdown-track" aria-hidden="true"><span></span></div>
+        <div class="countdown-progress-head"><span>今月お受けできる伴走枠</span><b>残りわずか</b></div>
+        <div class="countdown-track" role="img" aria-label="今月お受けできる伴走枠は残りわずか"><span></span></div>
         <p class="countdown-note">このページを初めて開いてから3日間。<br>再読み込みしても残り時間は戻りません。</p>
       </div>
       <p class="countdown-ended">3日間のご案内は終了しました。<br>現在の受付状況は、下の商品案内をご確認ください。</p>
@@ -255,7 +255,7 @@
     const duration=3*24*60*60*1000,key=root.dataset.storageKey;let deadline;
     try{const saved=Number(localStorage.getItem(key)),hasSavedDeadline=Number.isFinite(saved)&&saved>0;deadline=hasSavedDeadline?saved:Date.now()+duration;if(!hasSavedDeadline)localStorage.setItem(key,String(deadline))}catch(_){deadline=Date.now()+duration}
     const set=(name,value)=>{root.querySelector(`[data-${name}]`).textContent=String(value).padStart(2,'0')};let timer;
-    const renderCountdown=()=>{const diff=Math.max(0,deadline-Date.now()),totalSeconds=Math.floor(diff/1000),days=Math.floor(totalSeconds/86400),hours=Math.floor((totalSeconds%86400)/3600),minutes=Math.floor((totalSeconds%3600)/60),seconds=totalSeconds%60;set('days',days);set('hours',hours);set('minutes',minutes);set('seconds',seconds);root.style.setProperty('--remaining',`${Math.max(0,Math.min(100,diff/duration*100))}%`);root.querySelector('[data-remaining-text]').textContent=diff>0?`あと${days+1}日`:'終了';if(diff<=0){root.classList.add('is-ended');if(timer)clearInterval(timer)}};
+    const renderCountdown=()=>{const diff=Math.max(0,deadline-Date.now()),totalSeconds=Math.floor(diff/1000),days=Math.floor(totalSeconds/86400),hours=Math.floor((totalSeconds%86400)/3600),minutes=Math.floor((totalSeconds%3600)/60),seconds=totalSeconds%60;set('days',days);set('hours',hours);set('minutes',minutes);set('seconds',seconds);if(diff<=0){root.classList.add('is-ended');if(timer)clearInterval(timer)}};
     renderCountdown();timer=setInterval(renderCountdown,1000)
   });
 </script>
