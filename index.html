@@ -42,6 +42,19 @@
     .scroll{margin-top:24px;color:var(--mute);font:500 10px/1.5 "Cormorant Garamond",serif;letter-spacing:.4em}.scroll:after{content:"";display:block;width:1px;height:38px;margin:8px auto;background:linear-gradient(var(--gold),transparent)}
     .pricepeek{margin:-70px 18px 0;position:relative;z-index:5;padding:24px 13px;background:rgba(13,29,35,.97);border:1px solid rgba(201,165,84,.38);box-shadow:0 18px 45px rgba(0,0,0,.35);text-align:center}
     .pricepeek .ttl{font-size:11px;color:var(--gold);letter-spacing:.22em;margin-bottom:14px}.pricegrid{display:grid;grid-template-columns:repeat(3,1fr)}.mini{padding:3px 6px}.mini+.mini{border-left:1px solid rgba(201,165,84,.22)}.mini b{display:block;font-family:"Shippori Mincho B1",serif;font-size:12px;color:var(--gold-hi)}.mini span{display:block;font:600 clamp(21px,6.4vw,29px)/1.25 "Cormorant Garamond",serif}.mini small{font-family:"Shippori Mincho B1",serif;font-size:10px;margin-left:1px}.pricepeek>small{display:block;color:var(--mute);font-size:11px;line-height:1.8;margin-top:13px}
+    .countdown-shell{padding:54px 18px 18px;background:linear-gradient(180deg,var(--ink),#122523)}
+    .countdown-card{--remaining:100%;position:relative;max-width:650px;margin:auto;padding:54px 20px 28px;border:2px solid #d8a397;outline:1px solid rgba(201,165,84,.42);outline-offset:-14px;background:linear-gradient(180deg,#fffaf4,#f7f0e7);color:#392f2a;text-align:center;box-shadow:0 20px 55px rgba(0,0,0,.3)}
+    .countdown-badge{position:absolute;top:-24px;left:50%;transform:translateX(-50%);padding:12px 27px;background:#a83f2c;color:#fff;font-family:"Shippori Mincho B1",serif;font-size:17px;font-weight:800;letter-spacing:.12em;white-space:nowrap;box-shadow:0 9px 22px rgba(104,35,22,.2)}
+    .countdown-kicker{font-size:12px;color:#87663f;letter-spacing:.16em;margin-bottom:8px}
+    .countdown-card h2{font-size:clamp(22px,6vw,31px);line-height:1.65;color:#382f2b;letter-spacing:.05em}
+    .countdown-card h2 strong{display:block;color:#4d6848;font-size:1.13em}
+    .countdown-prices{margin-top:10px;color:#71665f;font-size:12px;line-height:1.9}
+    .countdown-timer{display:grid;grid-template-columns:repeat(4,1fr);max-width:430px;margin:25px auto 18px}
+    .time-part{position:relative;min-width:0}.time-part:not(:last-child):after{content:"：";position:absolute;right:-.34em;top:4px;color:#bd7967;font-family:"Shippori Mincho B1",serif;font-size:24px}
+    .time-value{display:block;font:600 clamp(38px,11vw,59px)/1 "Cormorant Garamond",serif;color:#392f2b;font-variant-numeric:tabular-nums}.time-part:last-child .time-value{color:#b34e39}.time-label{display:block;margin-top:7px;color:#7b6f67;font-size:11px;letter-spacing:.12em}
+    .countdown-progress-head{display:flex;justify-content:space-between;gap:14px;margin:20px 6px 8px;color:#756a63;font-size:12px}.countdown-progress-head b{color:#ad4b35;font-family:"Shippori Mincho B1",serif}
+    .countdown-track{height:10px;margin:0 6px;border:1px solid #e3cfaa;border-radius:999px;background:#eeeae5;overflow:hidden}.countdown-track span{display:block;width:var(--remaining);height:100%;border-radius:inherit;background:linear-gradient(90deg,#b94c31,#efa08d);transition:width 1s linear}
+    .countdown-note{margin:15px 10px 0;color:#71665f;font-size:11px;line-height:1.8}.countdown-ended{display:none;margin:23px 0 5px;color:#9b3d2c;font-family:"Shippori Mincho B1",serif;font-size:17px;font-weight:700}.countdown-card.is-ended .countdown-ended{display:block}.countdown-card.is-ended .countdown-progress{display:none}
     .big{font-family:"Shippori Mincho B1",serif;text-align:center;font-size:clamp(26px,7.4vw,40px);line-height:1.72;font-weight:800;margin:43px 0}
     .quote{margin:40px 0;padding:29px 19px;border-top:1px solid rgba(201,165,84,.28);border-bottom:1px solid rgba(201,165,84,.28);text-align:center;font-family:"Shippori Mincho B1",serif;font-size:18px;line-height:2.05;color:var(--gold-hi);background:linear-gradient(180deg,rgba(201,165,84,.06),transparent)}
     .photo{position:relative;margin:44px calc(var(--pad) * -1);overflow:hidden}.photo img{aspect-ratio:4/3;object-fit:cover;filter:saturate(.9) brightness(.88)}.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--ink),transparent 25%,transparent 72%,var(--ink))}.photo .over{position:absolute;inset:0;z-index:2;display:grid;place-items:center;text-align:center;padding:30px;font:700 23px/2 "Shippori Mincho B1",serif;text-shadow:0 2px 18px #000}
@@ -84,6 +97,27 @@
       <div class="mini"><b>3か月</b><span>99,800<small>円</small></span></div>
     </div>
     <small>受け取れる内容は同じです。違うのは伴走する期間だけです。</small>
+  </div>
+
+  <div class="countdown-shell">
+    <div class="countdown-card reveal" data-countdown data-storage-key="tenka-shintaku-support-countdown-v1">
+      <div class="countdown-badge">本鑑定後 3日間</div>
+      <div class="countdown-kicker">FOR YOU</div>
+      <h2>神託を、<br><strong>毎日の選択に変えるために</strong></h2>
+      <div class="countdown-prices">2週間 15,800円 ／ 1か月 39,800円<br>3か月 99,800円</div>
+      <div class="countdown-timer" aria-label="ご案内期間の残り時間">
+        <div class="time-part"><span class="time-value" data-days>02</span><span class="time-label">日</span></div>
+        <div class="time-part"><span class="time-value" data-hours>23</span><span class="time-label">時間</span></div>
+        <div class="time-part"><span class="time-value" data-minutes>59</span><span class="time-label">分</span></div>
+        <div class="time-part"><span class="time-value" data-seconds>59</span><span class="time-label">秒</span></div>
+      </div>
+      <div class="countdown-progress">
+        <div class="countdown-progress-head"><span>ご案内期間の残り</span><b data-remaining-text>あと3日</b></div>
+        <div class="countdown-track" aria-hidden="true"><span></span></div>
+        <p class="countdown-note">このページを初めて開いてから3日間。<br>再読み込みしても残り時間は戻りません。</p>
+      </div>
+      <p class="countdown-ended">3日間のご案内は終了しました。<br>現在の受付状況は、下の商品案内をご確認ください。</p>
+    </div>
   </div>
 
   <section class="s-blue">
@@ -217,6 +251,13 @@
   const els=document.querySelectorAll('.reveal');
   if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.1});els.forEach(e=>io.observe(e))}else{els.forEach(e=>e.classList.add('visible'))}
   const sticky=document.getElementById('sticky');let shown=false;addEventListener('scroll',()=>{const next=scrollY>innerHeight*.72;if(next!==shown){shown=next;sticky.classList.toggle('show',shown)}},{passive:true});
+  document.querySelectorAll('[data-countdown]').forEach(root=>{
+    const duration=3*24*60*60*1000,key=root.dataset.storageKey;let deadline;
+    try{const saved=Number(localStorage.getItem(key)),hasSavedDeadline=Number.isFinite(saved)&&saved>0;deadline=hasSavedDeadline?saved:Date.now()+duration;if(!hasSavedDeadline)localStorage.setItem(key,String(deadline))}catch(_){deadline=Date.now()+duration}
+    const set=(name,value)=>{root.querySelector(`[data-${name}]`).textContent=String(value).padStart(2,'0')};let timer;
+    const renderCountdown=()=>{const diff=Math.max(0,deadline-Date.now()),totalSeconds=Math.floor(diff/1000),days=Math.floor(totalSeconds/86400),hours=Math.floor((totalSeconds%86400)/3600),minutes=Math.floor((totalSeconds%3600)/60),seconds=totalSeconds%60;set('days',days);set('hours',hours);set('minutes',minutes);set('seconds',seconds);root.style.setProperty('--remaining',`${Math.max(0,Math.min(100,diff/duration*100))}%`);root.querySelector('[data-remaining-text]').textContent=diff>0?`あと${days+1}日`:'終了';if(diff<=0){root.classList.add('is-ended');if(timer)clearInterval(timer)}};
+    renderCountdown();timer=setInterval(renderCountdown,1000)
+  });
 </script>
 </body>
 </html>
