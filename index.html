@@ -55,7 +55,7 @@
     .countdown-progress-head{display:flex;justify-content:space-between;gap:14px;margin:20px 6px 8px;color:#756a63;font-size:12px}.countdown-progress-head b{color:#ad4b35;font-family:"Shippori Mincho B1",serif}
     .countdown-track{height:10px;margin:0 6px;border:1px solid #e3cfaa;border-radius:999px;background:#eeeae5;overflow:hidden}.countdown-track span{display:block;width:90%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#b94c31,#efa08d)}
     .countdown-cta{display:block;max-width:390px;margin:20px auto 0;padding:15px 18px;border-radius:999px;background:linear-gradient(100deg,#86652c,#e4ca86 50%,#86652c);color:#20170d;text-decoration:none;font-family:"Shippori Mincho B1",serif;font-size:15px;font-weight:800;letter-spacing:.1em;box-shadow:0 9px 24px rgba(128,91,38,.22)}
-    .countdown-note{margin:15px 10px 0;color:#71665f;font-size:11px;line-height:1.8}.countdown-ended{display:none;margin:23px 0 5px;color:#9b3d2c;font-family:"Shippori Mincho B1",serif;font-size:17px;font-weight:700}.countdown-card.is-ended .countdown-ended{display:block}.countdown-card.is-ended .countdown-progress{display:none}
+    .countdown-note{margin:15px 10px 0;color:#71665f;font-size:11px;line-height:1.8}.countdown-ended{display:none;margin:23px 0 5px;color:#9b3d2c;font-family:"Shippori Mincho B1",serif;font-size:17px;font-weight:700}.countdown-card.is-ended .countdown-ended{display:block}
     .big{font-family:"Shippori Mincho B1",serif;text-align:center;font-size:clamp(26px,7.4vw,40px);line-height:1.72;font-weight:800;margin:43px 0}
     .quote{margin:40px 0;padding:29px 19px;border-top:1px solid rgba(201,165,84,.28);border-bottom:1px solid rgba(201,165,84,.28);text-align:center;font-family:"Shippori Mincho B1",serif;font-size:18px;line-height:2.05;color:var(--gold-hi);background:linear-gradient(180deg,rgba(201,165,84,.06),transparent)}
     .photo{position:relative;margin:44px calc(var(--pad) * -1);overflow:hidden}.photo img{aspect-ratio:4/3;object-fit:cover;filter:saturate(.9) brightness(.88)}.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--ink),transparent 25%,transparent 72%,var(--ink))}.photo .over{position:absolute;inset:0;z-index:2;display:grid;place-items:center;text-align:center;padding:30px;font:700 23px/2 "Shippori Mincho B1",serif;text-shadow:0 2px 18px #000}
@@ -101,8 +101,8 @@
   </div>
 
   <div class="countdown-shell">
-    <div class="countdown-card reveal" data-countdown data-storage-key="tenka-shintaku-support-countdown-v1">
-      <div class="countdown-badge">本鑑定後 3日間</div>
+    <div class="countdown-card reveal" data-countdown data-storage-key="tenka-shintaku-support-countdown-start-v2">
+      <div class="countdown-badge">本鑑定後 3日後の24時まで</div>
       <div class="countdown-kicker">FOR YOU</div>
       <h2>神託を、<br><strong>毎日の選択に変えるために</strong></h2>
       <div class="countdown-prices">2週間 15,800円 ／ 1か月 39,800円<br>3か月 99,800円</div>
@@ -116,7 +116,7 @@
         <div class="countdown-progress-head"><span>今月お受けできる伴走枠</span><b>残りわずか</b></div>
         <div class="countdown-track" role="img" aria-label="今月お受けできる伴走枠は残りわずか"><span></span></div>
         <a class="countdown-cta" href="#plans">伴走プランを見る</a>
-        <p class="countdown-note">このページを初めて開いてから3日間。<br>再読み込みしても残り時間は戻りません。</p>
+        <p class="countdown-note">このページを初めて開いた日を基準に、3日後の24時まで。<br>再読み込みしても残り時間は戻りません。</p>
       </div>
       <p class="countdown-ended">3日間のご案内は終了しました。<br>現在の受付状況は、下の商品案内をご確認ください。</p>
     </div>
@@ -254,8 +254,10 @@
   if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.1});els.forEach(e=>io.observe(e))}else{els.forEach(e=>e.classList.add('visible'))}
   const sticky=document.getElementById('sticky');let shown=false;addEventListener('scroll',()=>{const next=scrollY>innerHeight*.72;if(next!==shown){shown=next;sticky.classList.toggle('show',shown)}},{passive:true});
   document.querySelectorAll('[data-countdown]').forEach(root=>{
-    const duration=3*24*60*60*1000,key=root.dataset.storageKey;let deadline;
-    try{const saved=Number(localStorage.getItem(key)),hasSavedDeadline=Number.isFinite(saved)&&saved>0;deadline=hasSavedDeadline?saved:Date.now()+duration;if(!hasSavedDeadline)localStorage.setItem(key,String(deadline))}catch(_){deadline=Date.now()+duration}
+    const periodDays=3,key=root.dataset.storageKey;
+    const getDeadline=openedAt=>{const end=new Date(openedAt);end.setDate(end.getDate()+periodDays);end.setHours(24,0,0,0);return end.getTime()};
+    let deadline;
+    try{const saved=Number(localStorage.getItem(key)),hasSavedStart=Number.isFinite(saved)&&saved>0,openedAt=hasSavedStart?saved:Date.now();if(!hasSavedStart)localStorage.setItem(key,String(openedAt));deadline=getDeadline(openedAt)}catch(_){deadline=getDeadline(Date.now())}
     const set=(name,value)=>{root.querySelector(`[data-${name}]`).textContent=String(value).padStart(2,'0')};let timer;
     const renderCountdown=()=>{const diff=Math.max(0,deadline-Date.now()),totalSeconds=Math.floor(diff/1000),days=Math.floor(totalSeconds/86400),hours=Math.floor((totalSeconds%86400)/3600),minutes=Math.floor((totalSeconds%3600)/60),seconds=totalSeconds%60;set('days',days);set('hours',hours);set('minutes',minutes);set('seconds',seconds);if(diff<=0){root.classList.add('is-ended');if(timer)clearInterval(timer)}};
     renderCountdown();timer=setInterval(renderCountdown,1000)
